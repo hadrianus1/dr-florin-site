@@ -94,7 +94,7 @@ export default function SurgeonSite() {
       name: "Dr. Teodor-Florin Georgescu",
       role: "Medic Primar Chirurgie Generală",
       title: "MD, PhD",
-      motto: "Dedicare și excelență pentru fiecare pacient.",
+      motto: "Performanță medicală și devotament individualizat.",
       cta: "Programează consultație",
       
       nav: {
@@ -763,7 +763,7 @@ export default function SurgeonSite() {
         <div style={{ display: "flex", width: "100%", maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 2 }}>
           <div style={{ flex: 1, padding: "80px 60px 80px 80px", display: "flex", flexDirection: "column", justifyContent: "center", animation: "fadeInUp 0.8s ease 0.2s both" }}>
             <div style={{ fontSize: "13px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: "#4fc3d9", marginBottom: "20px" }}>
-              {lang === "ro" ? "Chirurgie Generală de Vârf" : "CUTTING-EDGE GENERAL SURGERY"}
+              {lang === "ro" ? "Chirurgie Generală de top" : "CUTTING-EDGE GENERAL SURGERY"}
             </div>
 
             <h1 style={{ fontSize: "56px", fontWeight: "400", lineHeight: "1.1", marginBottom: "12px", color: "#1a1a1a" }}>
