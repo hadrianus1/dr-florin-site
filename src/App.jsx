@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./App.css";
 import { FaWhatsapp, FaInstagram, FaFacebook, FaTiktok, FaYoutube, FaTrash, FaCheck, FaReply, FaThumbsUp, FaThumbsDown, FaHeart } from "react-icons/fa";
 
 function ReactionBar({ entityType, entity, userReactions, onReact }) {
@@ -57,6 +58,7 @@ export default function SurgeonSite() {
   const [commentUsername, setCommentUsername] = useState("");
   const [questionUsername, setQuestionUsername] = useState("");
   const [toast, setToast] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const [fingerprint] = useState(() => {
     let fp = localStorage.getItem('reaction_fp');
@@ -708,60 +710,77 @@ export default function SurgeonSite() {
           height: "70px",
         }}
       >
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px", height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div style={{ flexShrink: 0 }}>
-          <img src="/Florin_3.jpeg" style={{ height: "54px", width: "auto", display: "block", borderRadius: "2px" }} alt="Dr. Georgescu" />
+        <div className="header-inner" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px", height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ flexShrink: 0 }}>
+            <img src="/Florin_3.jpeg" style={{ height: "54px", width: "auto", display: "block", borderRadius: "2px" }} alt="Dr. Georgescu" />
+          </div>
+
+          <nav style={{ display: "flex", gap: "35px", listStyle: "none" }} className="desktop-nav">
+            {["home", "about", "expertise", "experience", "gallery", "comments", "qa", "contact"].map((section) => (
+              <a
+                key={section}
+                href={`#${section}`}
+                onClick={() => setActiveNav(section)}
+                style={{
+                  textDecoration: "none",
+                  color: activeNav === section ? "#4fc3d9" : "#2c2c2c",
+                  fontSize: "13px",
+                  fontWeight: "500",
+                  letterSpacing: "0.3px",
+                  textTransform: "uppercase",
+                  transition: "color 0.3s ease",
+                  borderBottom: activeNav === section ? "2px solid #4fc3d9" : "2px solid transparent",
+                  paddingBottom: "2px",
+                }}
+                onMouseEnter={(e) => { e.target.style.color = "#4fc3d9"; }}
+                onMouseLeave={(e) => { if (activeNav !== section) e.target.style.color = "#2c2c2c"; }}
+              >
+                {t.nav[section]}
+              </a>
+            ))}
+          </nav>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            {isAdmin && (
+              <button
+                onClick={handleAdminLogout}
+                style={{ background: "#e53935", color: "white", border: "none", padding: "5px 12px", borderRadius: "4px", cursor: "pointer", fontSize: "11px", fontWeight: "600", letterSpacing: "0.5px", textTransform: "uppercase" }}
+              >
+                {lang === "ro" ? "Ieși Admin" : "Logout Admin"}
+              </button>
+            )}
+            <div style={{ display: "flex", gap: "8px" }}>
+              <button onClick={() => setLang("ro")} style={{ background: "none", border: "none", fontSize: "12px", fontWeight: lang === "ro" ? "700" : "400", color: lang === "ro" ? "#4fc3d9" : "#999", cursor: "pointer", transition: "color 0.3s", textTransform: "uppercase" }}>RO</button>
+              <span style={{ color: "#ddd" }}>|</span>
+              <button onClick={() => setLang("en")} style={{ background: "none", border: "none", fontSize: "12px", fontWeight: lang === "en" ? "700" : "400", color: lang === "en" ? "#4fc3d9" : "#999", cursor: "pointer", transition: "color 0.3s", textTransform: "uppercase" }}>EN</button>
+            </div>
+            <button className={`hamburger-btn${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+              <span /><span /><span />
+            </button>
+          </div>
         </div>
 
-        <nav style={{ display: "flex", gap: "35px", listStyle: "none" }} className="desktop-nav">
+        {/* Mobile nav overlay */}
+        <div className={`mobile-nav-overlay${menuOpen ? " open" : ""}`}>
           {["home", "about", "expertise", "experience", "gallery", "comments", "qa", "contact"].map((section) => (
             <a
               key={section}
               href={`#${section}`}
-              onClick={() => setActiveNav(section)}
-              style={{
-                textDecoration: "none",
-                color: activeNav === section ? "#4fc3d9" : "#2c2c2c",
-                fontSize: "13px",
-                fontWeight: "500",
-                letterSpacing: "0.3px",
-                textTransform: "uppercase",
-                transition: "color 0.3s ease",
-                borderBottom: activeNav === section ? "2px solid #4fc3d9" : "2px solid transparent",
-                paddingBottom: "2px",
-              }}
-              onMouseEnter={(e) => { e.target.style.color = "#4fc3d9"; }}
-              onMouseLeave={(e) => { if (activeNav !== section) e.target.style.color = "#2c2c2c"; }}
+              className={activeNav === section ? "active" : ""}
+              onClick={() => { setActiveNav(section); setMenuOpen(false); }}
             >
               {t.nav[section]}
             </a>
           ))}
-        </nav>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          {isAdmin && (
-            <button
-              onClick={handleAdminLogout}
-              style={{ background: "#e53935", color: "white", border: "none", padding: "5px 12px", borderRadius: "4px", cursor: "pointer", fontSize: "11px", fontWeight: "600", letterSpacing: "0.5px", textTransform: "uppercase" }}
-            >
-              {lang === "ro" ? "Ieși Admin" : "Logout Admin"}
-            </button>
-          )}
-          <div style={{ display: "flex", gap: "8px" }}>
-            <button onClick={() => setLang("ro")} style={{ background: "none", border: "none", fontSize: "12px", fontWeight: lang === "ro" ? "700" : "400", color: lang === "ro" ? "#4fc3d9" : "#999", cursor: "pointer", transition: "color 0.3s", textTransform: "uppercase" }}>RO</button>
-            <span style={{ color: "#ddd" }}>|</span>
-            <button onClick={() => setLang("en")} style={{ background: "none", border: "none", fontSize: "12px", fontWeight: lang === "en" ? "700" : "400", color: lang === "en" ? "#4fc3d9" : "#999", cursor: "pointer", transition: "color 0.3s", textTransform: "uppercase" }}>EN</button>
-          </div>
-        </div>
         </div>
       </header>
 
       {/* ===== HERO ===== */}
-      <section id="home" style={{ height: "100vh", display: "flex", alignItems: "center", background: "linear-gradient(135deg, #fafaf8 0%, #f5f3f0 100%)", position: "relative", overflow: "hidden" }}>
+      <section id="home" className="hero-section" style={{ height: "100vh", display: "flex", alignItems: "center", background: "linear-gradient(135deg, #fafaf8 0%, #f5f3f0 100%)", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "600px", height: "600px", background: "radial-gradient(circle, rgba(79, 195, 217, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
-        <div style={{ display: "flex", width: "100%", maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 2 }}>
-          <div style={{ flex: 1, padding: "80px 60px 80px 80px", display: "flex", flexDirection: "column", justifyContent: "center", animation: "fadeInUp 0.8s ease 0.2s both" }}>
+        <div className="hero-inner" style={{ display: "flex", width: "100%", maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 2 }}>
+          <div className="hero-text" style={{ flex: 1, padding: "80px 60px 80px 80px", display: "flex", flexDirection: "column", justifyContent: "center", animation: "fadeInUp 0.8s ease 0.2s both" }}>
             <div style={{ fontSize: "13px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: "#4fc3d9", marginBottom: "20px" }}>
               {lang === "ro" ? "Chirurgie Generală de top" : "CUTTING-EDGE GENERAL SURGERY"}
             </div>
@@ -805,7 +824,7 @@ export default function SurgeonSite() {
             </div>
           </div>
 
-          <div style={{ flex: 1, height: "100%", position: "relative", overflow: "hidden", animation: "fadeInScale 0.8s ease 0.4s both" }}>
+          <div className="hero-img" style={{ flex: 1, height: "100%", position: "relative", overflow: "hidden", animation: "fadeInScale 0.8s ease 0.4s both" }}>
             <img src="/Florin_1.jpeg" alt={t.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(26,26,26,0.1) 0%, transparent 50%)", pointerEvents: "none" }} />
           </div>
@@ -813,16 +832,16 @@ export default function SurgeonSite() {
       </section>
 
       {/* ===== ABOUT ===== */}
-      <section id="about" style={{ padding: "100px 40px", background: "white" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", gap: "80px", alignItems: "center" }}>
-        <div style={{ flex: 1, overflow: "hidden" }}>
+      <section id="about" className="section-pad" style={{ padding: "100px 40px", background: "white" }}>
+        <div className="about-inner" style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", gap: "80px", alignItems: "center" }}>
+        <div className="about-photo" style={{ flex: 1, overflow: "hidden" }}>
           <img src="/Florin_3.jpeg" alt="About" style={{ width: "100%", height: "auto", borderRadius: "2px", objectFit: "cover" }} />
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: "13px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: "#4fc3d9", marginBottom: "16px" }}>
             {lang === "ro" ? "Experiență și Devotament" : "Experience & Dedication"}
           </div>
-          <h2 style={{ fontSize: "42px", fontWeight: "400", marginBottom: "28px", color: "#1a1a1a", lineHeight: "1.2" }}>
+          <h2 className="section-title" style={{ fontSize: "42px", fontWeight: "400", marginBottom: "28px", color: "#1a1a1a", lineHeight: "1.2" }}>
             {t.about.title}
           </h2>
           <p style={{ fontSize: "15px", lineHeight: "1.8", color: "#666", marginBottom: "20px" }}>
@@ -850,7 +869,7 @@ export default function SurgeonSite() {
             <p style={{ fontSize: "13px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: "#4fc3d9", marginBottom: "16px" }}>
               {lang === "ro" ? "Urmărește-mă în acțiune" : "Watch me in action"}
             </p>
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+            <div className="video-links" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
               {[
                 {
                   icon: <FaFacebook size={20} />,
@@ -909,17 +928,17 @@ export default function SurgeonSite() {
       </section>
 
       {/* ===== EXPERTISE ===== */}
-      <section id="expertise" style={{ padding: "100px 40px", background: "white" }}>
+      <section id="expertise" className="section-pad" style={{ padding: "100px 40px", background: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "80px" }}>
-          <h2 style={{ fontSize: "42px", fontWeight: "400", marginBottom: "16px", color: "#1a1a1a" }}>
+          <h2 className="section-title" style={{ fontSize: "42px", fontWeight: "400", marginBottom: "16px", color: "#1a1a1a" }}>
             {t.expertise.title}
           </h2>
           <p style={{ fontSize: "16px", color: "#888", maxWidth: "600px", margin: "0 auto" }}>
             {t.expertise.subtitle}
           </p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "32px" }}>
+        <div className="expertise-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "32px" }}>
           {t.expertise.areas.map((area, i) => (
             <div key={i} style={{ background: "#fafaf8", padding: "40px 32px", borderRadius: "2px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", transition: "all 0.3s ease", cursor: "pointer" }} onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.1)"; e.currentTarget.style.transform = "translateY(-4px)"; }} onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.05)"; e.currentTarget.style.transform = "translateY(0)"; }}>
               <div style={{ fontSize: "32px", marginBottom: "16px" }}>{area.icon}</div>
@@ -940,7 +959,7 @@ export default function SurgeonSite() {
       </section>
 
       {/* ===== EXPERIENCE ===== */}
-      <section id="experience" style={{ padding: "100px 40px", background: "#fafaf8" }}>
+      <section id="experience" className="section-pad" style={{ padding: "100px 40px", background: "#fafaf8" }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
 
           {/* Section heading */}
@@ -948,7 +967,7 @@ export default function SurgeonSite() {
             <div style={{ fontSize: "13px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: "#4fc3d9", marginBottom: "16px" }}>
               {lang === "ro" ? "Parcurs Medical" : "Medical Journey"}
             </div>
-            <h2 style={{ fontSize: "42px", fontWeight: "400", marginBottom: "16px", color: "#1a1a1a" }}>
+            <h2 className="section-title" style={{ fontSize: "42px", fontWeight: "400", marginBottom: "16px", color: "#1a1a1a" }}>
               {t.credentials.title}
             </h2>
             <p style={{ fontSize: "16px", color: "#888", maxWidth: "600px", margin: "0 auto" }}>
@@ -958,14 +977,14 @@ export default function SurgeonSite() {
 
           {/* Timeline */}
           <div style={{ position: "relative", maxWidth: "700px", margin: "0 auto 60px" }}>
-            <div style={{ position: "absolute", left: "130px", top: 0, bottom: 0, width: "1px", background: "#e0dcd5" }} />
+            <div className="timeline-line" style={{ position: "absolute", left: "130px", top: 0, bottom: 0, width: "1px", background: "#e0dcd5" }} />
             {t.credentials.items.map((item, i) => (
               <div key={i} style={{ display: "flex", marginBottom: "36px", position: "relative", alignItems: "flex-start" }}>
-                <div style={{ width: "130px", flexShrink: 0, paddingRight: "28px", textAlign: "right" }}>
+                <div className="timeline-year" style={{ width: "130px", flexShrink: 0, paddingRight: "28px", textAlign: "right" }}>
                   <span style={{ fontSize: "12px", fontWeight: "600", color: "#4fc3d9", letterSpacing: "0.3px", lineHeight: "1.6" }}>{item.year}</span>
                 </div>
-                <div style={{ position: "absolute", left: "126px", top: "5px", width: "9px", height: "9px", borderRadius: "50%", background: "#4fc3d9" }} />
-                <div style={{ paddingLeft: "36px" }}>
+                <div className="timeline-dot" style={{ position: "absolute", left: "126px", top: "5px", width: "9px", height: "9px", borderRadius: "50%", background: "#4fc3d9" }} />
+                <div className="timeline-content" style={{ paddingLeft: "36px" }}>
                   <p style={{ margin: "0 0 4px 0", fontWeight: "600", fontSize: "15px", color: "#1a1a1a", lineHeight: "1.4" }}>{item.title}</p>
                   <p style={{ margin: "0", fontSize: "13px", color: "#888" }}>{item.institution}</p>
                 </div>
@@ -979,7 +998,7 @@ export default function SurgeonSite() {
           </div>
 
           {/* Academic + Research — two columns */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginBottom: "60px" }}>
+          <div className="exp-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", marginBottom: "60px" }}>
             <div style={{ background: "white", padding: "32px", borderRadius: "2px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)" }}>
               <h3 style={{ fontSize: "18px", fontWeight: "600", color: "#1a1a1a", marginBottom: "6px", paddingBottom: "12px", borderBottom: "2px solid #4fc3d9" }}>{t.credentials.academic.title}</h3>
               <p style={{ fontSize: "13px", color: "#aaa", marginBottom: "16px", marginTop: "10px" }}>{t.credentials.academic.intro}</p>
@@ -1003,7 +1022,7 @@ export default function SurgeonSite() {
           {/* Conferences */}
           <div style={{ background: "white", padding: "32px", borderRadius: "2px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", marginBottom: "80px" }}>
             <h3 style={{ fontSize: "18px", fontWeight: "600", color: "#1a1a1a", marginBottom: "20px", paddingBottom: "12px", borderBottom: "2px solid #4fc3d9" }}>{t.credentials.conferences.title}</h3>
-            <ul style={{ margin: 0, padding: "0 0 0 18px", columns: 2 }}>
+            <ul className="conf-list" style={{ margin: 0, padding: "0 0 0 18px", columns: 2 }}>
               {t.credentials.conferences.items.map((item, i) => (
                 <li key={i} style={{ fontSize: "14px", color: "#666", lineHeight: "1.7", marginBottom: "8px", breakInside: "avoid" }}>{item}</li>
               ))}
@@ -1031,10 +1050,10 @@ export default function SurgeonSite() {
       </section>
 
       {/* ===== GALLERY ===== */}
-      <section id="gallery" style={{ padding: "100px 40px", background: "white" }}>
+      <section id="gallery" className="section-pad" style={{ padding: "100px 40px", background: "white" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "80px" }}>
-            <h2 style={{ fontSize: "42px", fontWeight: "400", marginBottom: "16px", color: "#1a1a1a" }}>
+            <h2 className="section-title" style={{ fontSize: "42px", fontWeight: "400", marginBottom: "16px", color: "#1a1a1a" }}>
               {lang === "ro" ? "Galerie - În Sala de Operație" : "Gallery - In the Operating Room"}
             </h2>
           </div>
@@ -1047,9 +1066,9 @@ export default function SurgeonSite() {
       </section>
 
       {/* ===== COMMENTS ===== */}
-      <section id="comments" style={{ padding: "100px 40px", background: "white" }}>
+      <section id="comments" className="section-pad" style={{ padding: "100px 40px", background: "white" }}>
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <h2 style={{ fontSize: "42px", fontWeight: "400", marginBottom: "16px", color: "#1a1a1a" }}>
+          <h2 className="section-title" style={{ fontSize: "42px", fontWeight: "400", marginBottom: "16px", color: "#1a1a1a" }}>
             {t.comments.title}
           </h2>
 
@@ -1169,9 +1188,9 @@ export default function SurgeonSite() {
       </section>
 
       {/* ===== Q&A ===== */}
-      <section id="qa" style={{ padding: "100px 40px", background: "#fafaf8" }}>
+      <section id="qa" className="section-pad" style={{ padding: "100px 40px", background: "#fafaf8" }}>
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <h2 style={{ fontSize: "42px", fontWeight: "400", marginBottom: "8px", color: "#1a1a1a" }}>
+          <h2 className="section-title" style={{ fontSize: "42px", fontWeight: "400", marginBottom: "8px", color: "#1a1a1a" }}>
             {t.qa.title}
           </h2>
           <p style={{ fontSize: "16px", color: "#888", marginBottom: "40px" }}>
@@ -1413,7 +1432,7 @@ export default function SurgeonSite() {
       </section>
 
       {/* ===== CONTACT ===== */}
-      <section id="contact" style={{ padding: "100px 40px", background: "#1a1a1a", color: "white", textAlign: "center" }}>
+      <section id="contact" className="section-pad" style={{ padding: "100px 40px", background: "#1a1a1a", color: "white", textAlign: "center" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
           <h2 style={{ fontSize: "42px", fontWeight: "400", marginBottom: "16px", color: "white" }}>
             {t.contact.title}
