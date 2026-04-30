@@ -344,8 +344,6 @@ app.get('/api/health', async (req, res) => {
 
 // ===== STATIC FILES =====
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 const buildPath = path.join(__dirname, 'build');
 const hasBuild = fs.existsSync(buildPath);
 
@@ -354,6 +352,7 @@ if (hasBuild) {
   app.use(express.static(buildPath));
 } else {
   console.log('⚠️  build/ folder not found. Run: npm run build');
+  app.use(express.static(path.join(__dirname, 'public')));
 }
 
 app.get('*', (req, res) => {
