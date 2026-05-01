@@ -91,6 +91,20 @@ export default function SurgeonSite() {
       .catch(() => localStorage.removeItem('adminToken'));
   }, []);
 
+  const liverIcon = (
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+      <path
+        d="M7,25 C5,21 4,17 5,13 C6,8 10,4 15,3 C19,2 24,4 27,7 C30,11 31,16 30,21 C28,26 24,30 18,31 C13,32 9,29 7,25Z"
+        fill="#a93226"
+      />
+      <path
+        d="M15,3 C14,8 14,14 15,20 C16,24 17,27 18,31"
+        stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" fill="none" strokeLinecap="round"
+      />
+      <ellipse cx="23" cy="28" rx="4" ry="2.5" fill="#2ecc71" opacity="0.9"/>
+    </svg>
+  );
+
   useEffect(() => {
     document.documentElement.lang = lang;
     document.title = lang === 'ro'
@@ -103,7 +117,7 @@ export default function SurgeonSite() {
       name: "Dr. Teodor-Florin Georgescu",
       role: "Medic Primar Chirurgie Generală",
       title: "MD, PhD",
-      motto: "Performanță medicală și devotament individualizat.",
+      motto: "Dedicare și excelență pentru fiecare pacient.",
       cta: "Programează consultație",
       
       nav: {
@@ -224,7 +238,7 @@ export default function SurgeonSite() {
             "Abord deschis sau laparoscopic",
             "Materiale protetice moderne",
           ]},
-          { name: "Chirurgia Hepato-Biliară și Pancreatică", icon: "🫀", desc: [
+          { name: "Chirurgia Hepato-Biliară și Pancreatică", icon: liverIcon, desc: [
             "Litiază veziculară",
             "Chist hidatic hepatic",
             "Tumori hepatice benigne",
@@ -389,7 +403,7 @@ export default function SurgeonSite() {
             "Open and laparoscopic approach",
             "Modern prosthetic materials",
           ]},
-          { name: "Hepato-Biliary & Pancreatic Surgery", icon: "🫀", desc: [
+          { name: "Hepato-Biliary & Pancreatic Surgery", icon: liverIcon, desc: [
             "Gallstone disease",
             "Hepatic hydatid cyst",
             "Benign liver tumours",
@@ -719,9 +733,9 @@ export default function SurgeonSite() {
         }}
       >
         <div className="header-inner" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px", height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ flexShrink: 0 }}>
-            <img src="/Florin_3.jpeg" style={{ height: "54px", width: "auto", display: "block", borderRadius: "2px" }} alt="Dr. Georgescu" />
-          </div>
+          <a href="#home" onClick={() => setActiveNav("home")} style={{ flexShrink: 0, display: "block", lineHeight: 0 }}>
+            <img src="/Florin_3.jpeg" style={{ height: "54px", width: "auto", display: "block", borderRadius: "2px", cursor: "pointer" }} alt="Dr. Georgescu" />
+          </a>
 
           <nav style={{ display: "flex", gap: "35px", listStyle: "none" }} className="desktop-nav">
             {["home", "about", "expertise", "experience", "gallery", "comments", "qa", "contact"].map((section) => (

@@ -1,3 +1,13 @@
+/* ===== KEYFRAME ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
 /* ===== BASE RESET ===== */
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -9,6 +19,9 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   overflow-x: hidden;
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #4fc3d9 #f1f1f1;
 }
 
 /* Prevent horizontal scroll on any viewport */
@@ -25,6 +38,7 @@ a, button, [role="button"] {
 /* ===== INPUTS & TEXTAREA ===== */
 input, textarea, select {
   -webkit-appearance: none;
+  -moz-appearance: none;  /* Firefox */
   appearance: none;
   touch-action: manipulation;
 }
