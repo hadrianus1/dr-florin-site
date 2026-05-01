@@ -92,16 +92,51 @@ export default function SurgeonSite() {
   }, []);
 
   const liverIcon = (
-    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+    <svg width="44" height="44" viewBox="0 0 62 70" fill="none" aria-hidden="true">
+      <defs>
+        <radialGradient id="lv-main" cx="55%" cy="30%" r="65%">
+          <stop offset="0%"   stopColor="#e8604c"/>
+          <stop offset="40%"  stopColor="#c43828"/>
+          <stop offset="80%"  stopColor="#9c2418"/>
+          <stop offset="100%" stopColor="#6c140e"/>
+        </radialGradient>
+        <radialGradient id="lv-left" cx="30%" cy="25%" r="65%">
+          <stop offset="0%"   stopColor="#d04838"/>
+          <stop offset="100%" stopColor="#801a10"/>
+        </radialGradient>
+        <radialGradient id="lv-gb" cx="38%" cy="28%" r="70%">
+          <stop offset="0%"   stopColor="#7ade98"/>
+          <stop offset="55%"  stopColor="#28a850"/>
+          <stop offset="100%" stopColor="#166632"/>
+        </radialGradient>
+        <linearGradient id="lv-hl" x1="30%" y1="5%" x2="65%" y2="60%">
+          <stop offset="0%"   stopColor="rgba(255,235,225,0.70)"/>
+          <stop offset="100%" stopColor="rgba(255,200,190,0)"/>
+        </linearGradient>
+      </defs>
       <path
-        d="M7,25 C5,21 4,17 5,13 C6,8 10,4 15,3 C19,2 24,4 27,7 C30,11 31,16 30,21 C28,26 24,30 18,31 C13,32 9,29 7,25Z"
-        fill="#a93226"
+        d="M38,46 C42,44 52,47 54,56 C55,63 51,68 46,67 C41,67 37,63 38,57 C38,51 36,48 38,46Z"
+        fill="url(#lv-gb)"
+      />
+      <ellipse cx="45" cy="56" rx="5" ry="3.5" fill="rgba(255,255,255,0.32)" transform="rotate(-20 45 56)"/>
+      <path
+        d="M5,26 C4,18 6,8 12,4 C16,1 20,2 23,10 C24,16 25,22 24,26 C25,20 30,6 38,3 C46,0 54,6 56,18 C58,28 56,40 48,46 C40,52 24,52 14,44 C8,38 4,30 5,26Z"
+        fill="url(#lv-main)"
       />
       <path
-        d="M15,3 C14,8 14,14 15,20 C16,24 17,27 18,31"
-        stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" fill="none" strokeLinecap="round"
+        d="M5,26 C4,18 6,8 12,4 C16,1 20,2 22,10 C23,16 24,20 24,26 C18,30 10,32 8,38 C6,34 4,30 5,26Z"
+        fill="url(#lv-left)" opacity="0.55"
       />
-      <ellipse cx="23" cy="28" rx="4" ry="2.5" fill="#2ecc71" opacity="0.9"/>
+      <path
+        d="M38,4 C46,1 54,7 56,18 C50,12 42,8 36,8 C34,8 35,5 38,4Z"
+        fill="url(#lv-hl)"
+      />
+      <path
+        d="M12,5 C16,2 21,4 23,10 C18,7 13,8 11,11 C10,9 11,6 12,5Z"
+        fill="rgba(255,230,220,0.48)"
+      />
+      <path d="M32,24 C36,22 42,22 48,26" stroke="rgba(90,18,10,0.30)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+      <path d="M32,24 C30,30 30,38 32,44" stroke="rgba(90,18,10,0.30)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
     </svg>
   );
 
