@@ -787,7 +787,7 @@ export default function SurgeonSite() {
       <section id="home" className="hero-section" style={{ height: "100vh", display: "flex", alignItems: "center", background: "linear-gradient(135deg, #fafaf8 0%, #f5f3f0 100%)", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "600px", height: "600px", background: "radial-gradient(circle, rgba(79, 195, 217, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
-        <div className="hero-inner" style={{ display: "flex", width: "100%", maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 2 }}>
+        <div className="hero-inner" style={{ display: "flex", width: "100%", maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 2, alignSelf: "stretch" }}>
           <div className="hero-text" style={{ flex: 1, padding: "80px 60px 80px 80px", display: "flex", flexDirection: "column", justifyContent: "center", animation: "fadeInUp 0.8s ease 0.2s both" }}>
             <div style={{ fontSize: "13px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: "#4fc3d9", marginBottom: "20px" }}>
               {lang === "ro" ? "Chirurgie Generală de top" : "CUTTING-EDGE GENERAL SURGERY"}
@@ -832,9 +832,8 @@ export default function SurgeonSite() {
             </div>
           </div>
 
-          <div className="hero-img" style={{ flex: 1, height: "100%", position: "relative", overflow: "hidden", animation: "fadeInScale 0.8s ease 0.4s both" }}>
-            <img src="/Florin_1.jpeg" alt={t.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(26,26,26,0.1) 0%, transparent 50%)", pointerEvents: "none" }} />
+          <div className="hero-img" style={{ flex: "0 0 45%", height: "100%", position: "relative", overflow: "hidden", background: "linear-gradient(135deg, #fafaf8 0%, #f5f3f0 100%)", animation: "fadeInScale 0.8s ease 0.4s both" }}>
+            <img src="/Florin_1.jpeg" alt={t.name} style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center bottom" }} />
           </div>
         </div>
       </section>

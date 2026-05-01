@@ -141,7 +141,19 @@ a:active     { opacity: 0.8; }
   .hero-img {
     flex: none !important;
     width: 100% !important;
-    height: 320px !important;
+    height: auto !important;
+    aspect-ratio: 996 / 1600;   /* natural portrait ratio — no face crop */
+    position: relative !important;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fafaf8 0%, #f5f3f0 100%);
+  }
+  .hero-img img {
+    position: absolute !important;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: top center !important;
   }
 
   /* About */
@@ -216,6 +228,6 @@ a:active     { opacity: 0.8; }
   .hero-text h1 { font-size: 28px !important; }
   .section-title { font-size: 24px !important; }
   .stats-grid { grid-template-columns: 1fr 1fr !important; }
-  .hero-img { height: 280px !important; }
+  /* hero-img height driven by aspect-ratio at 480px, no override needed */
   .hero-text { padding: 76px 20px 32px !important; }
 }
