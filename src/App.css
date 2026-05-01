@@ -1,5 +1,44 @@
-/* ===== MOBILE RESET ===== */
-* { box-sizing: border-box; }
+/* ===== BASE RESET ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Remove Android tap highlight on everything */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Prevent font inflation on orientation change (Samsung/Android) */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent horizontal scroll on any viewport */
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Faster tap response — removes 300ms delay (Android Chrome) */
+a, button, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* ===== INPUTS & TEXTAREA ===== */
+input, textarea, select {
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+}
+
+/* Replace Android blue Material outline with brand color */
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid #4fc3d9 !important;
+  border-color: #4fc3d9 !important;
+  box-shadow: none !important;
+}
+
+/* ===== BUTTON ACTIVE FEEDBACK (mobile tap) ===== */
+button:active { opacity: 0.75; transform: scale(0.98); }
+a:active     { opacity: 0.8; }
 
 /* ===== HAMBURGER BUTTON ===== */
 .hamburger-btn {
@@ -10,8 +49,11 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
   z-index: 200;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
 }
 .hamburger-btn span {
   display: block;
@@ -26,6 +68,11 @@
 .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ===== MOBILE NAV DROPDOWN ===== */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .mobile-nav-overlay {
   display: none;
   position: absolute;
@@ -33,27 +80,35 @@
   left: 0;
   right: 0;
   background: rgba(250, 250, 248, 0.98);
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
   z-index: 99;
   flex-direction: column;
-  padding: 8px 0 16px;
-  border-top: 1px solid #e0dcd5;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  padding: 6px 0 18px;
+  border-top: 1px solid rgba(224, 220, 213, 0.8);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
 }
-.mobile-nav-overlay.open { display: flex; }
+.mobile-nav-overlay.open {
+  display: flex;
+  animation: slideDown 0.22s ease both;
+}
 .mobile-nav-overlay a {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
   color: #2c2c2c !important;
   text-decoration: none;
   padding: 14px 24px;
   border-left: 3px solid transparent;
-  transition: all 0.2s;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
 }
-.mobile-nav-overlay a:hover { color: #4fc3d9 !important; background: #f5f3f0; border-left-color: #4fc3d9; }
-.mobile-nav-overlay a.active { color: #4fc3d9 !important; border-left-color: #4fc3d9; background: #f0f9fb; }
+.mobile-nav-overlay a:hover,
+.mobile-nav-overlay a:active  { color: #4fc3d9 !important; background: rgba(79,195,217,0.06); border-left-color: #4fc3d9; }
+.mobile-nav-overlay a.active  { color: #4fc3d9 !important; border-left-color: #4fc3d9; background: rgba(79,195,217,0.08); }
 
 /* ===== BREAKPOINT: tablets ===== */
 @media (max-width: 900px) {
@@ -61,23 +116,24 @@
   .hamburger-btn { display: flex; }
 }
 
-/* ===== BREAKPOINT: mobile ===== */
+/* ===== BREAKPOINT: mobile (768px) ===== */
 @media (max-width: 768px) {
 
-  /* Header inner */
+  /* Header */
   .header-inner { padding: 0 20px !important; }
 
   /* Hero */
   .hero-section {
     height: auto !important;
-    min-height: 100svh;
+    min-height: 100vh;      /* fallback for old Chrome */
+    min-height: 100svh;     /* modern — excludes browser chrome */
   }
   .hero-inner {
     flex-direction: column !important;
     height: auto !important;
   }
   .hero-text {
-    padding: 80px 24px 40px !important;
+    padding: 80px 28px 36px !important;
     text-align: center !important;
     align-items: center !important;
   }
@@ -85,22 +141,38 @@
   .hero-img {
     flex: none !important;
     width: 100% !important;
-    height: 280px !important;
+    height: 320px !important;
   }
 
   /* About */
   .about-inner {
     flex-direction: column !important;
-    gap: 32px !important;
+    gap: 28px !important;
   }
-  .about-photo { height: 300px !important; overflow: hidden; flex: none !important; }
-  .about-photo img { width: 100%; height: 100% !important; object-fit: cover; object-position: top; }
+  .about-photo {
+    height: 320px !important;
+    overflow: hidden;
+    flex: none !important;
+    border-radius: 2px;
+  }
+  .about-photo img {
+    width: 100%;
+    height: 100% !important;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* Stats grid (2-col in about) */
+  .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
 
   /* Section padding */
   .section-pad { padding: 60px 20px !important; }
 
   /* Section titles */
   .section-title { font-size: 28px !important; }
+
+  /* Expertise cards — reduce heavy padding */
+  .expertise-card { padding: 28px 20px !important; }
 
   /* Experience 2-col grid */
   .exp-two-col { grid-template-columns: 1fr !important; gap: 20px !important; }
@@ -114,11 +186,11 @@
   .timeline-content { padding-left: 24px !important; }
   .timeline-line { left: 90px !important; }
 
-  /* Expertise grid */
+  /* Expertise grid — 1 column */
   .expertise-grid { grid-template-columns: 1fr !important; }
 
-  /* Video links */
-  .video-links > a { flex: 1 1 100% !important; }
+  /* Video links — full width on very small viewports */
+  .video-links > a { flex: 1 1 100% !important; min-width: 0 !important; }
 
   /* Contact grid */
   .contact-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
@@ -128,10 +200,22 @@
 
   /* Q&A reply area */
   .reply-input-area { padding: 12px !important; }
+
+  /* Gallery grid — ensure single column */
+  .gallery-grid { grid-template-columns: 1fr !important; }
+
+  /* Form inputs — 16px prevents iOS auto-zoom; looks clean on Android too */
+  .mobile-input {
+    font-size: 16px !important;
+    padding: 12px 14px !important;
+  }
 }
 
+/* ===== BREAKPOINT: small phones (480px) ===== */
 @media (max-width: 480px) {
   .hero-text h1 { font-size: 28px !important; }
   .section-title { font-size: 24px !important; }
   .stats-grid { grid-template-columns: 1fr 1fr !important; }
+  .hero-img { height: 280px !important; }
+  .hero-text { padding: 76px 20px 32px !important; }
 }

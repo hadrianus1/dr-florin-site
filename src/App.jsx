@@ -91,6 +91,13 @@ export default function SurgeonSite() {
       .catch(() => localStorage.removeItem('adminToken'));
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.title = lang === 'ro'
+      ? 'Dr. Teodor-Florin Georgescu — Medic Primar Chirurgie Generală | MD, PhD'
+      : 'Dr. Teodor-Florin Georgescu — Senior General Surgeon | MD, PhD';
+  }, [lang]);
+
   const t = {
     ro: {
       name: "Dr. Teodor-Florin Georgescu",
@@ -142,11 +149,11 @@ export default function SurgeonSite() {
         title: "Experiență & Educație",
         subtitle: "Un profil de referință în practica academică și clinică",
         items: [
-          { year: "2014 – 2019", title: "Medic Rezident – Chirurgie Generală", institution: "Spitalul Clinic de Urgență București" },
+          { year: "2014 – 2019", title: "Medic Rezident – Chirurgie Generală", institution: "Spitalul Clinic de Urgență București — Floreasca" },
           { year: "2016 – prezent", title: "Asistent Universitar", institution: 'Catedra de Chirurgie Generală, UMF „Carol Davila", București' },
           { year: "2020", title: "Doctor în Medicină (PhD)", institution: 'UMF „Carol Davila", București — teză privind diagnosticul molecular și prognosticul neoplasmelor rectale' },
-          { year: "2020 – 2025", title: "Medic Specialist Chirurgie Generală", institution: "Spitalul Clinic de Urgență București" },
-          { year: "din 2025", title: "Medic Primar Chirurgie Generală", institution: "Spitalul Clinic de Urgență București" },
+          { year: "2020 – 2025", title: "Medic Specialist Chirurgie Generală", institution: "Spitalul Clinic de Urgență București — Floreasca" },
+          { year: "din 2025", title: "Medic Primar Chirurgie Generală", institution: "Spitalul Clinic de Urgență București — Floreasca" },
         ],
         intl: "Formare profesională internațională (Heidelberg, Germania) și peste 25 de cursuri de perfecționare în chirurgia colorectală, chirurgia peretelui abdominal, urgențe chirurgicale, HPB, tehnici laparoscopice avansate.",
         academic: {
@@ -307,11 +314,11 @@ export default function SurgeonSite() {
         title: "Experience & Education",
         subtitle: "A reference profile in academic and clinical practice",
         items: [
-          { year: "2014 – 2019", title: "Surgical Resident – General Surgery", institution: "Emergency Clinical Hospital Bucharest" },
+          { year: "2014 – 2019", title: "Surgical Resident – General Surgery", institution: "Emergency Clinical Hospital Bucharest — Floreasca" },
           { year: "2016 – present", title: "University Assistant", institution: "Dept. of General Surgery, UMF 'Carol Davila', Bucharest" },
           { year: "2020", title: "Doctor of Medicine (PhD)", institution: "UMF 'Carol Davila', Bucharest — thesis on molecular diagnosis and prognosis of rectal neoplasms" },
-          { year: "2020 – 2025", title: "General Surgery Specialist", institution: "Emergency Clinical Hospital Bucharest" },
-          { year: "since 2025", title: "Senior General Surgeon (Medic Primar)", institution: "Emergency Clinical Hospital Bucharest" },
+          { year: "2020 – 2025", title: "General Surgery Specialist", institution: "Emergency Clinical Hospital Bucharest — Floreasca" },
+          { year: "since 2025", title: "Senior General Surgeon (Medic Primar)", institution: "Emergency Clinical Hospital Bucharest — Floreasca" },
         ],
         intl: "International professional training (Heidelberg, Germany) and over 25 advanced courses in colorectal surgery, abdominal wall surgery, surgical emergencies, HPB, and advanced laparoscopic techniques.",
         academic: {
@@ -705,6 +712,7 @@ export default function SurgeonSite() {
           zIndex: 100,
           background: isScrolled ? "rgba(250, 250, 248, 0.95)" : "rgba(250, 250, 248, 0.7)",
           backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
           borderBottom: isScrolled ? "1px solid #e0dcd5" : "none",
           transition: "all 0.3s ease",
           height: "70px",
@@ -850,7 +858,7 @@ export default function SurgeonSite() {
           <p style={{ fontSize: "15px", lineHeight: "1.8", color: "#666", marginBottom: "32px" }}>
             {t.about.bio}
           </p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             {[
               { label: lang === "ro" ? "Ani de experiență" : "Years of experience", value: "12+" },
               { label: lang === "ro" ? "Pacienți tratați" : "Patients treated", value: "1000+" },
@@ -940,7 +948,7 @@ export default function SurgeonSite() {
         </div>
         <div className="expertise-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "32px" }}>
           {t.expertise.areas.map((area, i) => (
-            <div key={i} style={{ background: "#fafaf8", padding: "40px 32px", borderRadius: "2px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", transition: "all 0.3s ease", cursor: "pointer" }} onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.1)"; e.currentTarget.style.transform = "translateY(-4px)"; }} onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.05)"; e.currentTarget.style.transform = "translateY(0)"; }}>
+            <div key={i} className="expertise-card" style={{ background: "#fafaf8", padding: "40px 32px", borderRadius: "2px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", transition: "all 0.3s ease", cursor: "pointer" }} onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 12px 32px rgba(0,0,0,0.1)"; e.currentTarget.style.transform = "translateY(-4px)"; }} onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.05)"; e.currentTarget.style.transform = "translateY(0)"; }}>
               <div style={{ fontSize: "32px", marginBottom: "16px" }}>{area.icon}</div>
               <h3 style={{ fontSize: "16px", fontWeight: "600", color: "#1a1a1a", marginBottom: "12px" }}>
                 {area.name}
@@ -1057,7 +1065,7 @@ export default function SurgeonSite() {
               {lang === "ro" ? "Galerie - În Sala de Operație" : "Gallery - In the Operating Room"}
             </h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "28px" }}>
+          <div className="gallery-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "28px" }}>
             <div style={{ overflow: "hidden", borderRadius: "2px", boxShadow: "0 4px 20px rgba(0,0,0,0.1)", aspectRatio: "16/10" }}>
               <img src="/Florin_2.jpeg" alt="Operating room" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
@@ -1078,6 +1086,7 @@ export default function SurgeonSite() {
               value={commentUsername}
               onChange={(e) => setCommentUsername(e.target.value)}
               placeholder={lang === "ro" ? "Numele tău *" : "Your name *"}
+              className="mobile-input"
               style={{
                 width: "100%",
                 padding: "10px 12px",
@@ -1085,13 +1094,14 @@ export default function SurgeonSite() {
                 borderRadius: "4px",
                 border: "1px solid #e0dcd5",
                 fontFamily: "inherit",
-                fontSize: "14px",
+                fontSize: "15px",
               }}
             />
             <textarea
               value={commentInput}
               onChange={(e) => setCommentInput(e.target.value)}
               placeholder={t.comments.placeholder}
+              className="mobile-input"
               style={{
                 width: "100%",
                 padding: "12px",
@@ -1099,7 +1109,7 @@ export default function SurgeonSite() {
                 borderRadius: "4px",
                 border: "1px solid #e0dcd5",
                 fontFamily: "inherit",
-                fontSize: "14px",
+                fontSize: "15px",
                 resize: "vertical",
               }}
             />
@@ -1203,6 +1213,7 @@ export default function SurgeonSite() {
               value={questionUsername}
               onChange={(e) => setQuestionUsername(e.target.value)}
               placeholder={lang === "ro" ? "Numele tău *" : "Your name *"}
+              className="mobile-input"
               style={{
                 width: "100%",
                 padding: "10px 12px",
@@ -1210,13 +1221,14 @@ export default function SurgeonSite() {
                 borderRadius: "4px",
                 border: "1px solid #e0dcd5",
                 fontFamily: "inherit",
-                fontSize: "14px",
+                fontSize: "15px",
               }}
             />
             <textarea
               value={questionInput}
               onChange={(e) => setQuestionInput(e.target.value)}
               placeholder={t.qa.placeholder}
+              className="mobile-input"
               style={{
                 width: "100%",
                 padding: "12px",
@@ -1224,7 +1236,7 @@ export default function SurgeonSite() {
                 borderRadius: "4px",
                 border: "1px solid #e0dcd5",
                 fontFamily: "inherit",
-                fontSize: "14px",
+                fontSize: "15px",
                 resize: "vertical",
               }}
             />
@@ -1393,6 +1405,7 @@ export default function SurgeonSite() {
                         value={replyInput[q.id] || ""}
                         onChange={(e) => setReplyInput({ ...replyInput, [q.id]: e.target.value })}
                         placeholder={t.qa.replyPlaceholder}
+                        className="mobile-input"
                         style={{
                           width: "100%",
                           padding: "8px",
@@ -1400,7 +1413,7 @@ export default function SurgeonSite() {
                           borderRadius: "4px",
                           border: "1px solid #e0dcd5",
                           fontFamily: "inherit",
-                          fontSize: "14px",
+                          fontSize: "15px",
                           resize: "vertical",
                         }}
                       />
