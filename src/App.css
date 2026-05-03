@@ -18,7 +18,11 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  overflow-x: hidden;
+  /* overflow: clip doesn't create a scroll container so position:sticky works in
+     Safari and Edge. Falls back to hidden on Safari < 16 (still clips, sticky broken
+     only on those very old versions). Do NOT use overflow:hidden here — it breaks
+     sticky headers across all browsers. */
+  overflow-x: clip;
   /* Firefox scrollbar */
   scrollbar-width: thin;
   scrollbar-color: #4fc3d9 #f1f1f1;
@@ -27,6 +31,7 @@ html {
 /* Prevent horizontal scroll on any viewport */
 body {
   overflow-x: hidden;
+  overflow-x: clip; /* progressive: doesn't create scroll container */
   max-width: 100%;
 }
 

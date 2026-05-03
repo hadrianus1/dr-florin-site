@@ -91,6 +91,9 @@ export default function SurgeonSite() {
       .catch(() => localStorage.removeItem('adminToken'));
   }, []);
 
+  const svgBase = window.location.href.replace(/#.*$/, '');
+  const svgFill = (id) => `url(${svgBase}#${id})`;
+
   const liverIcon = (
     <svg width="44" height="44" viewBox="0 0 62 70" fill="none" aria-hidden="true">
       <defs>
@@ -116,20 +119,20 @@ export default function SurgeonSite() {
       </defs>
       <path
         d="M38,46 C42,44 52,47 54,56 C55,63 51,68 46,67 C41,67 37,63 38,57 C38,51 36,48 38,46Z"
-        fill="url(#lv-gb)"
+        fill={svgFill('lv-gb')}
       />
       <ellipse cx="45" cy="56" rx="5" ry="3.5" fill="rgba(255,255,255,0.32)" transform="rotate(-20 45 56)"/>
       <path
         d="M5,26 C4,18 6,8 12,4 C16,1 20,2 23,10 C24,16 25,22 24,26 C25,20 30,6 38,3 C46,0 54,6 56,18 C58,28 56,40 48,46 C40,52 24,52 14,44 C8,38 4,30 5,26Z"
-        fill="url(#lv-main)"
+        fill={svgFill('lv-main')}
       />
       <path
         d="M5,26 C4,18 6,8 12,4 C16,1 20,2 22,10 C23,16 24,20 24,26 C18,30 10,32 8,38 C6,34 4,30 5,26Z"
-        fill="url(#lv-left)" opacity="0.55"
+        fill={svgFill('lv-left')} opacity="0.55"
       />
       <path
         d="M38,4 C46,1 54,7 56,18 C50,12 42,8 36,8 C34,8 35,5 38,4Z"
-        fill="url(#lv-hl)"
+        fill={svgFill('lv-hl')}
       />
       <path
         d="M12,5 C16,2 21,4 23,10 C18,7 13,8 11,11 C10,9 11,6 12,5Z"
