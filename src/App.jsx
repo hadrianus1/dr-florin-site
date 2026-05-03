@@ -26,7 +26,7 @@ function ReactionBar({ entityType, entity, userReactions, onReact }) {
               transition: 'all 0.15s',
             }}
           >
-            {icon} {count > 0 ? count : ''}
+            {icon} {count}
           </button>
         );
       })}
@@ -674,7 +674,7 @@ export default function SurgeonSite() {
     try {
       const response = await fetch(`/api/questions/${questionId}/replies`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeader() },
         body: JSON.stringify({ username: "Dr. Georgescu", text: reply }),
       });
       if (response.ok) {
@@ -1203,7 +1203,7 @@ export default function SurgeonSite() {
                   <p style={{ margin: "0 0 10px 0", fontSize: "12px", color: "#999" }}>
                     {formatDate(c.created_at)} {!c.approved && ` • ${t.comments.pending}`}
                   </p>
-                  <ReactionBar entityType="comment" entity={c} userReactions={userReactions} onReact={handleReact} />
+                  {c.approved && <ReactionBar entityType="comment" entity={c} userReactions={userReactions} onReact={handleReact} />}
                 </div>
                 {isAdmin && (
                   <div style={{ display: "flex", gap: "8px", marginLeft: "12px" }}>
@@ -1341,9 +1341,11 @@ export default function SurgeonSite() {
                     <p style={{ margin: "0 0 10px 0", fontSize: "12px", color: "#999" }}>
                       {formatDate(q.created_at)} {!q.approved && ` • ${t.qa.pending}`} • {q.replies.filter(r => r.approved || isAdmin).length} {t.qa.replies}
                     </p>
-                    <div onClick={e => e.stopPropagation()}>
-                      <ReactionBar entityType="question" entity={q} userReactions={userReactions} onReact={handleReact} />
-                    </div>
+                    {q.approved && (
+                      <div onClick={e => e.stopPropagation()}>
+                        <ReactionBar entityType="question" entity={q} userReactions={userReactions} onReact={handleReact} />
+                      </div>
+                    )}
                   </div>
                   {isAdmin && (
                     <div style={{ display: "flex", gap: "8px", marginLeft: "12px" }}>
@@ -1411,7 +1413,7 @@ export default function SurgeonSite() {
                             <p style={{ margin: "0 0 8px 0", fontSize: "12px", color: "#999" }}>
                               {formatDate(r.created_at)} {!r.approved && ` • ${t.qa.pending}`}
                             </p>
-                            <ReactionBar entityType="reply" entity={r} userReactions={userReactions} onReact={handleReact} />
+                            {r.approved && <ReactionBar entityType="reply" entity={r} userReactions={userReactions} onReact={handleReact} />}
                           </div>
                           {isAdmin && (
                             <div style={{ display: "flex", gap: "8px", marginLeft: "12px" }}>

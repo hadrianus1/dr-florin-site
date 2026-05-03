@@ -248,7 +248,7 @@ app.post('/api/questions/:id/replies', requireAdmin, async (req, res) => {
     const { username, text } = req.body;
     if (!text || !text.trim()) return res.status(400).json({ error: 'Text is required' });
     const result = await pool.query(
-      'INSERT INTO replies (question_id, username, text) VALUES ($1, $2, $3) RETURNING *',
+      'INSERT INTO replies (question_id, username, text, approved) VALUES ($1, $2, $3, true) RETURNING *',
       [req.params.id, (username || 'Dr. Georgescu').slice(0, 100), text.slice(0, 2000)]
     );
     res.status(201).json(result.rows[0]);
