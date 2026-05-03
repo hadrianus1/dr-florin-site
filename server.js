@@ -1,8 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
 const { Pool } = require('pg');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -342,43 +340,9 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-// ===== STATIC FILES =====
+// ===== EXPORT (Vercel serverless) =====
+// initDB is idempotent (CREATE TABLE IF NOT EXISTS) — safe to call on every cold start
 
-const buildPath = path.join(__dirname, 'build');
-const hasBuild = fs.existsSync(buildPath);
+initDB().catch(err => console.error('⚠️  DB init failed:', err.message));
 
-if (hasBuild) {
-  console.log('📁 Serving from build/ folder (production)');
-  app.use(express.static(buildPath));
-} else {
-  console.log('⚠️  build/ folder not found. Run: npm run build');
-  app.use(express.static(path.join(__dirname, 'public')));
-}
-
-app.get('*', (req, res) => {
-  const buildIndexPath = path.join(buildPath, 'index.html');
-  const publicIndexPath = path.join(__dirname, 'public', 'index.html');
-
-  if (fs.existsSync(buildIndexPath)) {
-    res.sendFile(buildIndexPath);
-  } else if (fs.existsSync(publicIndexPath)) {
-    res.sendFile(publicIndexPath);
-  } else {
-    res.status(404).json({ error: 'index.html not found', message: 'Run: npm run build' });
-  }
-});
-
-// ===== START =====
-
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, async () => {
-  console.log(`✅ Server running on port ${PORT}`);
-  console.log(`📍 http://localhost:${PORT}`);
-  try {
-    await initDB();
-    console.log('✅ Database ready');
-  } catch (err) {
-    console.error('⚠️  Database unavailable:', err.message);
-    console.error('Set DATABASE_URL in .env — API routes requiring DB will return 500');
-  }
-});
+module.exports = app;
